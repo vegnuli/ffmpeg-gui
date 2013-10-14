@@ -9,5 +9,6 @@
         <file>../translations/ffmpeg-gui_ru.qm</file>
         <file>../translations/ffmpeg-gui_ua.qm</file>
         <file>../translations/ffmpeg-gui_de.qm</file>
+        <file>../translations/ffmpeg-gui_es.qm</file>
     </qresource>
 </RCC>

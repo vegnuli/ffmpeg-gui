@@ -23,6 +23,8 @@ RESOURCES += src/resources.qrc
 TRANSLATIONS = translations/ffmpeg-gui_it.ts \
     translations/ffmpeg-gui_ru.ts \
     translations/ffmpeg-gui_ua.ts \
+    translations/ffmpeg-gui_es.ts \
+    translations/ffmpeg-gui_es_VE.ts \
     translations/ffmpeg-gui_de.ts
 
 #debugging
