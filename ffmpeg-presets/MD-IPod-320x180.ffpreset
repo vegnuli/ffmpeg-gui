@@ -1,0 +1,13 @@
+# export for Ipod 320x180
+acodec=libfaac
+ab=128k
+vcodec=mpeg4
+b=1200k
+mbd=2
+flags=+mv4
+trellis=2
+cmp=2
+subcmp=2
+s=320x180
+metadata=title=X
+f=mp4
