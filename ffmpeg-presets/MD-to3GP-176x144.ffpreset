@@ -1,0 +1,7 @@
+# take care of the resolution since it may vary from phone to phone
+s=176x144
+vcodec=h263
+acodec=aac
+ar=8000
+ab=32k
+f=3gp

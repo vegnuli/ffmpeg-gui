@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ffmpegFrontend</class>
+ <widget class="QDialog" name="ffmpegFrontend">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>629</width>
+    <height>605</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>629</width>
+    <height>540</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>ffmpeg GUI v1.1</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/icons/icon32.png</normaloff>:/icons/icons/icon32.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="5">
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Preset</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="CB_ffmpeg_preset">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>21</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PB_save_current_preset">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>220</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>save current preset</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QPushButton" name="PB_set_ffmpeg_dir">
+         <property name="text">
+          <string>ffmpeg executable path</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="LE_ffmpeg_dir"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="label_6">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>21</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Items with a red circle are those commonly used</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" rowspan="3">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Audio codec</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CB_audio_codec">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Nimbus Mono L</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="CB_disable_audio">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Disable audio stream</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_13">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>bit rate</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_audio_bitrate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>30000</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>64</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>frequency</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_audio_frequency">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>150000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>44100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_15">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>channels</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_audio_channels">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>20</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="2">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Video codec</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CB_video_codec">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Nimbus Mono L</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="CB_disable_video">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Disable video stream</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>bit rate</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_video_bitrate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>30000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>200</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>frame rate</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_video_framerate">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>200</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>25</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="4">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Container format</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="CB_container">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Nimbus Mono L</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="2" rowspan="2">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0" colspan="2">
+      <widget class="QCheckBox" name="CB_as_original">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>As original</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" rowspan="2">
+      <widget class="QLabel" name="label_3">
+       <property name="minimumSize">
+        <size>
+         <width>91</width>
+         <height>51</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Resolution</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true">X</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_x_resolution">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+         <property name="singleStep">
+          <number>8</number>
+         </property>
+         <property name="value">
+          <number>640</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true">Y</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_y_resolution">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+         <property name="singleStep">
+          <number>8</number>
+         </property>
+         <property name="value">
+          <number>480</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="4" rowspan="2">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="spacing">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QCheckBox" name="CB_log_to_html">
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>log to html file</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PB_clear_log_file">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Clear log</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PB_view_log">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>21</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>View log</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true">threads</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_threads">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>-1 = no thread parameter
+0 = let ffmpeg decide
+&gt;0 number of threads to use
+This parameter is not stored in presets</string>
+         </property>
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0" colspan="5">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <widget class="QTextEdit" name="TE_preview_args">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>61</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="minimumSize">
+        <size>
+         <width>542</width>
+         <height>118</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>ffmpeg command line parameters. You can add your own here and press enter key to update the view.
+When executing will be added:
+&lt;-i INPUT_FILE&gt; at the begin
+&lt;OUTPUT_FILE&gt; at the end
+-vf scale=W:H,pad=W:H:X:Y:#000000
+-threads n (if n&gt;=0).
+WARNING: if a file with the same name exists, will be replaced (-y option added by default).</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="1" rowspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" rowspan="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3" colspan="2">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="4">
+    <widget class="QPushButton" name="PB_close">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Exit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QPushButton" name="PB_convert_video_file">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>choose video file(s)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QCheckBox" name="CB_delete_original_video">
+     <property name="text">
+      <string>delete original video
+after the conversion</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>about</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>PB_close</sender>
+   <signal>clicked()</signal>
+   <receiver>ffmpegFrontend</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>619</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
