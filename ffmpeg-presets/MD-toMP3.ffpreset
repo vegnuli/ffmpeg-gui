@@ -1,0 +1,6 @@
+# extract audio track to mp3 format
+acodec=libmp3lame
+vn
+ab=160
+ac=2
+f=mp3
