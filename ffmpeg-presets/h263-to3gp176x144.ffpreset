@@ -1,0 +1,9 @@
+# take care of the resolution since it may vary from phone to phone
+# older ffmpeg do not support saling size from presets
+#s=176x144
+vcodec=h263
+acodec=aac
+ar=8000
+ab=32k
+# older ffmpeg do not support format loading from preset
+#f=3gp
