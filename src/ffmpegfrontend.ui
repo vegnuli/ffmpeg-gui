@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>605</height>
+    <width>640</width>
+    <height>618</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,8 +23,11 @@
    <iconset resource="resources.qrc">
     <normaloff>:/icons/icons/icon32.png</normaloff>:/icons/icons/icon32.png</iconset>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0" colspan="5">
+   <item row="2" column="0" colspan="5">
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <property name="sizeConstraint">
       <enum>QLayout::SetFixedSize</enum>
@@ -101,23 +104,30 @@
        </item>
       </layout>
      </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <item>
-        <widget class="QPushButton" name="PB_set_ffmpeg_dir">
-         <property name="text">
-          <string>ffmpeg executable path</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="LE_ffmpeg_dir"/>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
-   <item row="2" column="0" colspan="3">
+   <item row="3" column="0" colspan="2">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" colspan="2">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
     <widget class="QLabel" name="label_6">
      <property name="minimumSize">
       <size>
@@ -130,7 +140,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" rowspan="3">
+   <item row="6" column="0" rowspan="3">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="label_2">
@@ -219,7 +229,7 @@
           <number>1</number>
          </property>
          <property name="value">
-          <number>64</number>
+          <number>96</number>
          </property>
         </widget>
        </item>
@@ -318,7 +328,14 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="2">
+   <item row="6" column="1" rowspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QLabel" name="label">
@@ -406,7 +423,7 @@
           <number>10</number>
          </property>
          <property name="value">
-          <number>200</number>
+          <number>150</number>
          </property>
         </widget>
        </item>
@@ -466,7 +483,14 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="4">
+   <item row="6" column="3" rowspan="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QLabel" name="label_10">
@@ -509,6 +533,14 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="CB_delete_original_video">
+       <property name="text">
+        <string>delete original video
+after the conversion</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -521,9 +553,57 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="text">
+          <string notr="true">threads</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SB_threads">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>-1 = no thread parameter
+0 = let ffmpeg decide
+&gt;0 number of threads to use
+This parameter is not stored in presets</string>
+         </property>
+         <property name="minimum">
+          <number>-1</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
-   <item row="4" column="2" rowspan="2">
+   <item row="7" column="2" rowspan="2">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" colspan="2">
       <widget class="QCheckBox" name="CB_as_original">
@@ -634,11 +714,32 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="4" rowspan="2">
+   <item row="7" column="4" rowspan="2">
     <layout class="QVBoxLayout" name="verticalLayout_7">
      <property name="spacing">
       <number>3</number>
      </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_12">
+       <item>
+        <widget class="QLineEdit" name="LE_ffmpeg_dir"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PB_set_ffmpeg_dir">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>ffmpeg
+executable</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QCheckBox" name="CB_log_to_html">
        <property name="toolTip">
@@ -687,65 +788,43 @@
        </property>
       </widget>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <item>
-        <widget class="QLabel" name="label_7">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="text">
-          <string notr="true">threads</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="SB_threads">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>21</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>-1 = no thread parameter
-0 = let ffmpeg decide
-&gt;0 number of threads to use
-This parameter is not stored in presets</string>
-         </property>
-         <property name="minimum">
-          <number>-1</number>
-         </property>
-         <property name="value">
-          <number>-1</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
-   <item row="6" column="0" colspan="5">
+   <item row="9" column="0" colspan="5">
     <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <widget class="QPushButton" name="PB_convert_video_file">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>38</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>choose video file(s) AND CONVERT NOW!</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/documentinfo.png</normaloff>:/icons/icons/documentinfo.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QTextEdit" name="TE_preview_args">
        <property name="minimumSize">
         <size>
          <width>0</width>
-         <height>61</height>
+         <height>32</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>If necesary add your own here and MUST PRESS ENTER to update the view.</string>
        </property>
       </widget>
      </item>
@@ -754,7 +833,7 @@ This parameter is not stored in presets</string>
        <property name="minimumSize">
         <size>
          <width>542</width>
-         <height>118</height>
+         <height>90</height>
         </size>
        </property>
        <property name="font">
@@ -762,14 +841,21 @@ This parameter is not stored in presets</string>
          <pointsize>9</pointsize>
         </font>
        </property>
+       <property name="toolTip">
+        <string>You can add your own here and press enter key to update the view.</string>
+       </property>
        <property name="text">
-        <string>ffmpeg command line parameters. You can add your own here and press enter key to update the view.
-When executing will be added:
-&lt;-i INPUT_FILE&gt; at the begin
-&lt;OUTPUT_FILE&gt; at the end
--vf scale=W:H,pad=W:H:X:Y:#000000
--threads n (if n&gt;=0).
-WARNING: if a file with the same name exists, will be replaced (-y option added by default).</string>
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ffmpeg command line parameters&lt;/span&gt;. must press enter to update before choose file&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When executing will be added:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;-i INPUT_FILE&amp;gt; at the begin&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;OUTPUT_FILE&amp;gt; at the end&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;-vf scale=W:H,pad=W:H:X:Y:#000000&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;-threads n (if n&amp;gt;=0).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;WARNING: output file will be replaced if exits (-y option added by default).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -778,91 +864,101 @@ WARNING: if a file with the same name exists, will be replaced (-y option added 
      </item>
     </layout>
    </item>
-   <item row="3" column="1" rowspan="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="0" column="4">
+    <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0,0">
+     <property name="spacing">
+      <number>0</number>
      </property>
-    </widget>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>about</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/icon32.png</normaloff>:/icons/icons/icon32.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="PB_close">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>27</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Exit</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/icons/system-shutdown.png</normaloff>:/icons/icons/system-shutdown.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
-   <item row="3" column="3" rowspan="3">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="Line" name="line_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="Line" name="line_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3" colspan="2">
-    <widget class="Line" name="line_5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="4">
-    <widget class="QPushButton" name="PB_close">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>27</height>
-      </size>
-     </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_16">
      <property name="text">
-      <string>Exit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QPushButton" name="PB_convert_video_file">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>27</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>choose video file(s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QCheckBox" name="CB_delete_original_video">
-     <property name="text">
-      <string>delete original video
-after the conversion</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>about</string>
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/icons/ffmpeg-logo-gui.png&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -889,4 +985,21 @@ after the conversion</string>
    </hints>
   </connection>
  </connections>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>10</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
 </ui>

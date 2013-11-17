@@ -1,11 +1,7 @@
-ffmpeg-gui: mirror repo of Ffmpeg frontend of VenenuX
-==========
-
 ffmpegGUI. Frontend for ffmpeg
 
 
 ABOUT
-------
 
 ffmpegGUI is a frontend to ffmpeg that allow you to set most important
 conversion parameters. You can choose your preferred installed preset
@@ -17,7 +13,6 @@ Written using Qt framework.
 
 
 INSTALL & USAGE
-----------------
 
 In Linux/X11 or Mac OS/X, install the latest Qt development packages that
 you will find on http://qt.nokia.com/ on terminal, go inside the source 
@@ -33,7 +28,6 @@ there's no process to uninstall, files are under DESTDIR variable.
 
 
 PLANS & ISSUES:
----------------
 
 translations and preset are not right handle by instalation, the 
 program only manage the ffmpeg frontend, the ffplay and ffprobe still not.
@@ -45,7 +39,6 @@ program only manage the ffmpeg frontend, the ffplay and ffprobe still not.
 
 
 LICENCE:
---------
 
 Copyright (C) 2010-2012  Marco Bavagnoli - lil.deimos@gmail.com
 Copyright (C) 2013  PICCORO Lenz McKAY - mckaygerhard@gmail.com
@@ -65,7 +58,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 CONTACT:
---------
 
 Hope you enjoy this app and if you have any comment, suggestions or bug report,
 leave me an email <lil.deimos@gmail.com>, I will be happy for your support.

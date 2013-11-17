@@ -1,6 +1,7 @@
 /***************************************************************************
-*  ffmpegGUI. Frontend for ffmpeg                                          *
+*  FFMPEG-GUI main  source file, frontend for ffmpeg                       *
 *  Copyright (C) 2009-2012  Marco Bavagnoli - lil.deimos@gmail.com         *
+*  Copyright (C) 2013  PICCORO Lenz McKAY - mckaygerhard@gmail.com         *
 *                                                                          *
 *  This program is free software: you can redistribute it and/or modify    *
 *  it under the terms of the GNU General Public License as published by    *
@@ -30,10 +31,13 @@ int main(int argc, char *argv[])
     QString localeName=l.name();
     QTranslator translator;
 
-    if (localeName.contains("de")) translator.load(":/translations/translations/ffmpeg-gui_de");
-    if (localeName.contains("ru")) translator.load(":/translations/translations/ffmpeg-gui_ru");
-    if (localeName.contains("ua")) translator.load(":/translations/translations/ffmpeg-gui_ua");
-    if (localeName.contains("it")) translator.load(":/translations/translations/ffmpeg-gui_it");
+    if (localeName.contains("de")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_de");
+    if (localeName.contains("es")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_es");
+    if (localeName.contains("es_ES")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_es");
+    if (localeName.contains("es_VE")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_es_VE");
+    if (localeName.contains("ru")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_ru");
+    if (localeName.contains("ua")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_ua");
+    if (localeName.contains("it")) translator.load(":/usr/share/ffmpeg-gui/ffmpeg-gui_it");
 
     a.installTranslator(&translator);
 

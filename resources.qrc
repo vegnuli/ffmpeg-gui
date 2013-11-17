@@ -1,14 +1,19 @@
 <RCC>
-    <qresource prefix="icons">
-        <file>icons/circle.png</file>
-        <file>icons/transparent.png</file>
-        <file>icons/icon32.png</file>
-    </qresource>
-    <qresource prefix="translations">
-        <file>translations/ffmpeg-gui_it.qm</file>
-        <file>translations/ffmpeg-gui_ru.qm</file>
-        <file>translations/ffmpeg-gui_ua.qm</file>
-        <file>translations/ffmpeg-gui_de.qm</file>
-        <file>translations/ffmpeg-gui_es.qm</file>
-    </qresource>
+  <qresource prefix="/icons">
+    <file>icons/system-shutdown.png</file>
+    <file>icons/documentinfo.png</file>
+    <file>icons/circle.png</file>
+    <file>icons/transparent.png</file>
+    <file>icons/icon32.png</file>
+    <file>icons/ffmpeg-logo.png</file>
+    <file>icons/ffmpeg-logo-gui.png</file>
+  </qresource>
+  <qresource prefix="/translations">
+    <file>translations/ffmpeg-gui_it.qm</file>
+    <file>translations/ffmpeg-gui_ru.qm</file>
+    <file>translations/ffmpeg-gui_ua.qm</file>
+    <file>translations/ffmpeg-gui_de.qm</file>
+    <file>translations/ffmpeg-gui_es.qm</file>
+    <file>translations/ffmpeg-gui_es_VE.qm</file>
+  </qresource>
 </RCC>
