@@ -1,0 +1,11 @@
+v1.2 (12 Oct 2013)
+	FIXED events must stopped on close button prevent segfaults
+	FIX workaround on regExp pattern for scaling personalized video
+	ADDED updated live the command line args
+	NEW added -stric experimental by default, need for some used codecs
+	NEW added icons and logo from ffmpeg project
+	NEW added translation for spanish
+v1.1 (10 Jan 2012)
+	FIXED fixed unandled spaces in paths
+	NEW added about button
+	NEW added path chosing for ffmpeg executable

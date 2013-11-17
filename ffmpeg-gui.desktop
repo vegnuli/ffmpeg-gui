@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Ffmpeg-GUI
+GenericName=Qt ffmpeg frontend
+Comment=Frontend for ffmpeg
+Comment[es]=Ffmpeg interfaz grafica
+Categories=AudioVideo;Qt;
+Exec=/usr/bin/ffmpeg-gui
+StartupNotify=true
+Icon=ffmpeg-gui.png
+Terminal=false
+Type=Application
