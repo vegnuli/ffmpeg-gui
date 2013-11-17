@@ -55,18 +55,18 @@ ffmpegOutput::ffmpegOutput(QWidget *parent) :
     if (!logLocation.exists()) logLocation.mkdir(logLocation.absolutePath());
 
     // dont copy files to home, only put here the modified/created by users
-/*    #ifdef Q_WS_X11
+    #ifdef Q_WS_X11
         QDir systemPath;
         QFileInfoList entries;
-        QFile file;
-        systemPath.setPath("/usr/local/share/ffmpeg/");
-        entries= systemPath.entryInfoList(QStringList("*.ffpreset"),QDir::Files,QDir::Name);
+        QFile file;			// TODO: macro for shared dir install
+        systemPath.setPath("/usr/share/ffmpeg/"); // was /etc/ffmpeg-gui/
+        entries= systemPath.entryInfoList(QStringList("MD*.ffpreset"),QDir::Files,QDir::Name);
         foreach (QFileInfo f, entries) {
             file.setFileName(f.absoluteFilePath());
             file.copy(QDir::homePath()+"/.ffmpeg-gui/"+f.fileName());
         }
     #endif
-*/
+
 #endif
 
     html_log = new QFile(logLocation.absolutePath()+"/ffmpegLog.html");
@@ -549,16 +549,15 @@ void ffmpegFrontend::setupCB_formats()
             item_text+=" "+format_description;
             ui->CB_container->addItem(item_text, description_words.at(0));
             // add a red circle icon to mark of common codec
-            if (description_words.at(0).contains("dvd", Qt::CaseInsensitive) ||
-                //description_words.at(0).contains("avi", Qt::CaseInsensitive) || // Mocosoft format
-                description_words.at(0).contains("ogg", Qt::CaseInsensitive) ||
+            if (description_words.at(0).contains("ogg", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("dvd", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("mp4", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("mpg", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("263", Qt::CaseInsensitive) ||
-                description_words.at(0).contains("264", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("m4", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("mp3", Qt::CaseInsensitive) ||
-                description_words.at(0).contains("mp4", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("264", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("matroska", Qt::CaseInsensitive) ||
-                description_words.at(0).contains("wav", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("3gp", Qt::CaseInsensitive) )
                 ui->CB_container->setItemIcon(ui->CB_container->count()-1, QIcon(":/icons/icons/circle.png"));
             else
@@ -604,7 +603,7 @@ void ffmpegFrontend::setupCB_codecs()
 
     // ffmpeg 0.X and v1 the first 7 chars identify decoding, encodig, video, audio ... ffmpeg v2 are diffrent
     rx.setPattern("([DEVASDT ]{7,7})(.*)\\n");
-    // ffmpeg v2 the more to left 7 chars with space (6) identify decoding, encodig, video, audio ... ffmpeg v2 are diffrent
+    // TODO ffmpeg v2 the more to left 7 chars with space (6) identify decoding, encodig, video, audio ... ffmpeg v2 are diffrent
     //rx.setPattern("([\\.DEVIASDTL]{6,6}) (.*)\\n");
     rx.setMinimal(true);
     pos=0;
@@ -630,10 +629,12 @@ void ffmpegFrontend::setupCB_codecs()
             ui->CB_video_codec->addItem(item_text, description_words.at(0));
             // add a red circle icon to mark common codecs
             if (description_words.at(0).contains("mpeg", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("ogv", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("mp4", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("dvd", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("263", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("264", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("xvid", Qt::CaseInsensitive) ||
-                //description_words.at(0).contains("flash", Qt::CaseInsensitive) || // mocosoft format
                 description_words.at(0).contains("quicktime", Qt::CaseInsensitive) )
                 ui->CB_video_codec->setItemIcon(ui->CB_video_codec->count()-1, QIcon(":/icons/icons/circle.png"));
             else
@@ -649,6 +650,7 @@ void ffmpegFrontend::setupCB_codecs()
             ui->CB_audio_codec->addItem(item_text, description_words.at(0));
             // add a red circle icon to mark common codecs
             if (description_words.at(0).contains("mpeg", Qt::CaseInsensitive) ||
+                description_words.at(0).contains("ogg", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("mp3", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("aac", Qt::CaseInsensitive) )
                 ui->CB_audio_codec->setItemIcon(ui->CB_audio_codec->count()-1, QIcon(":/icons/icons/circle.png"));
@@ -671,6 +673,7 @@ void ffmpegFrontend::onCB_ffmpeg_preset_changed(int i)
         if (ui->CB_ffmpeg_preset->itemData(i).toString().contains("/.ffmpeg-gui/") || // This if we are in release mode
             ui->CB_ffmpeg_preset->itemData(i).toString().contains("/ffmpeg-presets/"))   // This if we are in debug mode
         {
+            // TODO loading of MD files from systems preset paths
             QFile file(ui->CB_ffmpeg_preset->itemData(i).toString());
             // TODO: check file char and existance
             if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -708,6 +711,17 @@ void ffmpegFrontend::onCB_ffmpeg_preset_changed(int i)
                     check_command("-f","mp4");
 
                 }
+                // TODO olders ffmpeg do not support format loading from presets
+                if (codec=="mpeg4") {
+                    ui->CB_container->setCurrentIndex(ui->CB_container->findText("mp4",Qt::MatchStartsWith));
+                    check_command("-f","mp4");
+                }
+                // TODO olders ffmpeg do not support format loading from presets
+                if (codec=="h263") {
+                    ui->CB_container->setCurrentIndex(ui->CB_container->findText("mp4",Qt::MatchStartsWith));
+                    check_command("-f","3gp");
+                }
+                // TODO loading of MD files from systems preset paths
                 update_ffmpeg_args();
                 b=true;
                 break;
@@ -721,7 +735,7 @@ void ffmpegFrontend::onCB_ffmpeg_preset_changed(int i)
 
 void ffmpegFrontend::on_CB_container_currentIndexChanged(int index)
 {
-    // remove -f (format)
+    // remove -f (format) ?? TODO conflicting updates when selection of presets
     if (index==0) {
         remove_command("-f");
     }
@@ -1075,7 +1089,7 @@ QString ffmpegFrontend::getSizeAndPaddingParameters(QFileInfo input_file)
     // Stream #0.1(und): Video: h264, yuv420p, 352x262 [PAR 1:1 DAR 176:131], 301 kb/s, 29.96 fps, 29.96 tbr, 29964 tbn, 59928 tbc
     // Example of output from 0.7 and up releases
     // Stream #0.1(und): Video: h264 (Constrained Baseline), yuv420p, 352x262, 301 kb/s, 29.96 fps, 29.96 tbr, 29964 tbn, 59928 tbc
-    rx.setPattern("Stream.*Video:.*(\\d{2,})x(\\d{2,}).*"); // TODO FIXME fixed but still return bad number
+    rx.setPattern("Stream.*Video:.*(\\d{2,})x(\\d{2,})[ |,|.]"); // TODO FIXME fixed but still return bad number
     qDebug() << "sized extracted " + rx.cap(1) + "x" + rx.cap(2);
     rx.setMinimal(true);
     if (rx.indexIn(result, 0) == -1)
@@ -1086,7 +1100,7 @@ QString ffmpegFrontend::getSizeAndPaddingParameters(QFileInfo input_file)
     }
     // WxH original detected values
     old_width = rx.cap(1).toInt();
-    old_height = (rx.cap(2) + "0").toInt(); // TODO work around for stupid thing rexpr 
+    old_height = (rx.cap(2)).toInt(); //  + "0" TODO work around for stupid thing rexpr 
     qDebug() << "sized detected " + QString::number(old_width) + "x" + QString::number(old_height);
 
     qreal dx,dy;
@@ -1119,16 +1133,11 @@ QString ffmpegFrontend::getSizeAndPaddingParameters(QFileInfo input_file)
     H_padding = ( (qreal)GUI_width-new_width ) / 2;
     V_padding = ( (qreal)GUI_height-new_height ) / 2;    // some fixed need here
 
-    // TODO FIXME: due the calculate of scaling facor this assig wrong number to Y so then swaping values
+    // TODO FIXME: due the calculate of scaling factor this assig wrong number to Y so then swaping values
     ret="-vf scale="+QString::number(new_width)+":"+QString::number(new_height)+","
         "pad="+QString::number(GUI_width)+":"+QString::number(GUI_height)+
         ":"+QString::number(H_padding)+":"+QString::number(V_padding)+":0x000000";
 
-    // original line: resulting in bad height asigned in high Y position and lower heigh
-    /*ret="-vf scale="+QString::number(new_width)+":"+QString::number(new_height)+","
-        "pad="+QString::number(GUI_width)+":"+QString::number(GUI_height)+
-        ":"+QString::number(H_padding)+":"+QString::number(V_padding)+":0x000000";
-*/
     return ret;
 }
 
