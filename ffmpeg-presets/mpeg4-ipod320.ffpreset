@@ -1,0 +1,16 @@
+# export for Ipod 320x180
+acodec=libfaac
+ab=128k
+vcodec=mpeg4
+b=1200k
+mbd=2
+flags=+mv4
+trellis=2
+cmp=2
+subcmp=2
+# not yet support for default preset of scaling in older ffmpeg
+#s=320x180
+# older ffmpeg do not support loading metada from presets
+#metadata=title=X
+# TODO set format to mp4 if loading this preset
+#f=mp4

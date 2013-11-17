@@ -1,6 +1,7 @@
 /***************************************************************************
-*  ffmpegGUI. Frontend for ffmpeg                                          *
-*  Copyright (C) 2010-2012  Marco Bavagnoli - lil.deimos@gmail.com         *
+*  FFMPEG-GUI main frontend source for wrapper gui rexpress usage ffmpeg   *
+*  Copyright (C) 2009-2012  Marco Bavagnoli - lil.deimos@gmail.com         *
+*  Copyright (C) 2013  PICCORO Lenz McKAY - mckaygerhard@gmail.com         *
 *                                                                          *
 *  This program is free software: you can redistribute it and/or modify    *
 *  it under the terms of the GNU General Public License as published by    *
@@ -44,35 +45,28 @@ ffmpegOutput::ffmpegOutput(QWidget *parent) :
 
     QDir path;
 #ifdef DEBUGGING
-    logLocation.setPath(QString(QUOTEME(PWD_PRO)));
-
+    logLocation.setPath(QString(QUOTEME(PWD_PRO))); // for debug mode read preset in path
 #else
     #ifdef Q_WS_X11
         logLocation.setPath(QDir::homePath()+"/.ffmpeg-gui");
     #endif
 
-    #if defined(Q_WS_WIN) || defined(Q_WS_PM)
-        logLocations.setPath(QDir::currentPath());
-    #endif
-
+    // directory not exist, create
     if (!logLocation.exists()) logLocation.mkdir(logLocation.absolutePath());
 
-    #ifdef Q_WS_X11
+    // dont copy files to home, only put here the modified/created by users
+/*    #ifdef Q_WS_X11
         QDir systemPath;
         QFileInfoList entries;
         QFile file;
-        systemPath.setPath("/etc/ffmpeg-gui/");
+        systemPath.setPath("/usr/local/share/ffmpeg/");
         entries= systemPath.entryInfoList(QStringList("*.ffpreset"),QDir::Files,QDir::Name);
         foreach (QFileInfo f, entries) {
             file.setFileName(f.absoluteFilePath());
             file.copy(QDir::homePath()+"/.ffmpeg-gui/"+f.fileName());
         }
     #endif
-
-    #ifdef Q_WS_WIN
-        // Nothing to do, css will install in program directory
-    #endif
-
+*/
 #endif
 
     html_log = new QFile(logLocation.absolutePath()+"/ffmpegLog.html");
@@ -131,6 +125,9 @@ void ffmpegOutput::closeLoggingFile()
 
 void ffmpegOutput::on_PB_close_clicked()
 {
+    // if close, sure for stop any process
+    emit PB_stop_ffmpeg_clicked();
+    // now we cand close
     setStopButtonDisabled(true);
     closeLoggingFile();
     ui->PTE_ffmpeg_command->setPlainText("");
@@ -270,10 +267,11 @@ ffmpegFrontend::ffmpegFrontend(QWidget *parent) :
         setDefaults();
 
         connect(ui->CB_ffmpeg_preset, SIGNAL(currentIndexChanged(int)), this, SLOT(onCB_ffmpeg_preset_changed(int)) );
-//        connect(ui->TE_preview_args, SIGNAL(textChanged()), this, SLOT(onTE_preview_args_textChanged()) );
+        // update command line preview in live if some thing clicked/changed
+        connect(ui->TE_preview_args, SIGNAL(textChanged()), this, SLOT(onTE_preview_args_textChanged()) );
 
         on_CB_as_original_clicked(ui->CB_as_original->isChecked());
-
+        // update command line preview
         update_ffmpeg_args();
     }
 
@@ -290,6 +288,8 @@ ffmpegFrontend::ffmpegFrontend(QWidget *parent) :
 
     settings conf;
     ui->LE_ffmpeg_dir->setText(conf.conf->value("ffmpeg/executable","").toString());
+
+    update_ffmpeg_GUI_args();
 }
 
 ffmpegFrontend::~ffmpegFrontend()
@@ -372,11 +372,11 @@ void ffmpegFrontend::setDefaults()
     ui->CB_as_original->setChecked(true);
     ui->SB_x_resolution->setValue(640);
     ui->SB_y_resolution->setValue(480);
-    ui->SB_audio_bitrate->setValue(64);
+    ui->SB_audio_bitrate->setValue(96);
     ui->SB_audio_frequency->setValue(44100);
     ui->SB_audio_channels->setValue(1);
-    ui->SB_video_bitrate->setValue(200);
-    ui->SB_video_framerate->setValue(25);
+    ui->SB_video_bitrate->setValue(160);
+    ui->SB_video_framerate->setValue(30);
     ui->SB_x_resolution->setDisabled(true);
     ui->SB_y_resolution->setDisabled(true);
     connectSlots();
@@ -451,9 +451,8 @@ void ffmpegFrontend::on_PB_save_current_preset_clicked()
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 // Get *.ffpreset file list
-// On windows presets are stored in FFMPEG_DATADIR path (must be set by user && not yet implemented)
-// better to copy them into PROGRAM_FOLDER\ffmpeg-presets for now
-// Linux: at first start files are copied by MainWindow::copy_application_files()
+// first version at first start files are copied by MainWindow::copy_application_files()
+// do not copy now, due only put modified in user dir
 QFileInfoList ffmpegFrontend::getPresetFileList()
 {
     QDir ffpresetDir;
@@ -464,7 +463,7 @@ QFileInfoList ffmpegFrontend::getPresetFileList()
     ffpresetDir.setPath("/usr/share/ffmpeg/");
     ffpresetDir=ffpresetDir.toNativeSeparators(ffpresetDir.absolutePath());
     ret += ffpresetDir.entryInfoList(QStringList("*.ffpreset"),QDir::Files,QDir::Name);
-    if (ffpresetDir.exists()) qDebug() << "ffmpeg presets dir: " << ffpresetDir.absolutePath();
+    if (ffpresetDir.exists()) qDebug() << "ffmpeg default presets dir: " << ffpresetDir.absolutePath();
 #endif
 
     // search ffmpeg-gui directory
@@ -476,27 +475,27 @@ QFileInfoList ffmpegFrontend::getPresetFileList()
         // search in custom home directory
         ffpresetDir.setPath(QDir::homePath()+"/.ffmpeg-gui");
         ffpresetDir=ffpresetDir.toNativeSeparators(ffpresetDir.absolutePath());
-//        if (ffpresetDir.exists()) qDebug() << "ffmpeg presets dir: " << ffpresetDir.absolutePath();
         local_preset_directory = ffpresetDir;
     #else
         ffpresetDir.setPath(QDir::currentPath());
         local_preset_directory = ffpresetDir;
     #endif
 #endif
-//    ffpresetDir=ffpresetDir.toNativeSeparators(ffpresetDir.absolutePath());
+    //ffpresetDir=ffpresetDir.toNativeSeparators(ffpresetDir.absolutePath());
     ret += ffpresetDir.entryInfoList(QStringList("*.ffpreset"),QDir::Files,QDir::Name);
-    if (ffpresetDir.exists()) qDebug() << "ffmpeg presets dir: " << ffpresetDir.absolutePath();
+    if (ffpresetDir.exists()) qDebug() << "ffmpeg home presets dir: " << ffpresetDir.absolutePath();
 
     return ret;
 }
 
+/** setupCB_presets ; load preset list combo list */
 void ffmpegFrontend::setupCB_presets()
 {
     QFileInfoList presetList=getPresetFileList();
     ui->CB_ffmpeg_preset->addItem("none");
     foreach (QFileInfo f, presetList) {
         ui->CB_ffmpeg_preset->addItem(f.baseName(), f.absoluteFilePath());
-//        qDebug () << "found " << f.absoluteFilePath() << " ffmpeg preset";
+    //    qDebug () << "found " << f.absoluteFilePath() << " ffmpeg preset";
     }
 }
 
@@ -551,7 +550,7 @@ void ffmpegFrontend::setupCB_formats()
             ui->CB_container->addItem(item_text, description_words.at(0));
             // add a red circle icon to mark of common codec
             if (description_words.at(0).contains("dvd", Qt::CaseInsensitive) ||
-                description_words.at(0).contains("avi", Qt::CaseInsensitive) ||
+                //description_words.at(0).contains("avi", Qt::CaseInsensitive) || // Mocosoft format
                 description_words.at(0).contains("ogg", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("263", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("264", Qt::CaseInsensitive) ||
@@ -576,7 +575,7 @@ void ffmpegFrontend::setupCB_codecs()
 {
     ffmpeg.start("ffmpeg -codecs");
     if (!ffmpeg.waitForFinished()) {
-        QMessageBox::critical(0,QObject::tr("error"),QObject::tr("ffmpeg could not starts or some error occurred") );
+        QMessageBox::critical(0,QObject::tr("error"),QObject::tr("ffmpeg could not starts or some error occurred, please revise output and remove or chosse compatible options") );
         return;
     }
 
@@ -603,8 +602,10 @@ void ffmpegFrontend::setupCB_codecs()
     ui->CB_audio_codec->addItem(tr("copy audio stream"), "copy");
     ui->CB_audio_codec->setItemIcon(ui->CB_audio_codec->count()-1, QIcon(":/icons/icons/transparent.png"));
 
-    // the first 7 chars identify decoding, encodig, video, audio ...
+    // ffmpeg 0.X and v1 the first 7 chars identify decoding, encodig, video, audio ... ffmpeg v2 are diffrent
     rx.setPattern("([DEVASDT ]{7,7})(.*)\\n");
+    // ffmpeg v2 the more to left 7 chars with space (6) identify decoding, encodig, video, audio ... ffmpeg v2 are diffrent
+    //rx.setPattern("([\\.DEVIASDTL]{6,6}) (.*)\\n");
     rx.setMinimal(true);
     pos=0;
     while ((pos = rx.indexIn(result, pos)) != -1)
@@ -632,7 +633,7 @@ void ffmpegFrontend::setupCB_codecs()
                 description_words.at(0).contains("263", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("264", Qt::CaseInsensitive) ||
                 description_words.at(0).contains("xvid", Qt::CaseInsensitive) ||
-                description_words.at(0).contains("flash", Qt::CaseInsensitive) ||
+                //description_words.at(0).contains("flash", Qt::CaseInsensitive) || // mocosoft format
                 description_words.at(0).contains("quicktime", Qt::CaseInsensitive) )
                 ui->CB_video_codec->setItemIcon(ui->CB_video_codec->count()-1, QIcon(":/icons/icons/circle.png"));
             else
@@ -1044,9 +1045,9 @@ QString ffmpegFrontend::getSizeAndPaddingParameters(QFileInfo input_file)
 {
     if (ui->CB_as_original->isChecked()) return "";
     // Parse output of "ffmpeg -i input_file and catch resolution.
-    // Example of output to parse:
-    // Stream #0.1(und): Video: h264, yuv420p, 352x262 [PAR 1:1 DAR 176:131], 301 kb/s, 29.96 fps, 29.96 tbr, 29964 tbn, 59928 tbc
+    // for catch resolution see example when set patter for catch
     QProcess tmp_ffmpeg;
+    // TODO FIXME: start a process here, get care of others if hancle, get segfaults
     tmp_ffmpeg.start("ffmpeg -i " + input_file.absoluteFilePath());
     qDebug() << "ffmpeg -i " + input_file.absoluteFilePath();
     if (tmp_ffmpeg.waitForReadyRead()) {
@@ -1058,55 +1059,76 @@ QString ffmpegFrontend::getSizeAndPaddingParameters(QFileInfo input_file)
     QString ret="";
     QByteArray result;
     QRegExp rx;
-    int width, GUI_width;
-    int height, GUI_height;
+    int old_width, GUI_width;
+    int old_height, GUI_height;
 
 //    result = tmp_ffmpeg.readAll();
 //    result = tmp_ffmpeg.readAllStandardOutput();
     result = tmp_ffmpeg.readAllStandardError();
     qDebug() << result;
 
-    // round width and height to the lower multiple of 8
+    // round width and height to the lower multiple of 8, umm for what? padding with high values?
     GUI_width=ui->SB_x_resolution->value()/8*8;
     GUI_height=ui->SB_y_resolution->value()/8*8;
 
-    rx.setPattern("Stream.*Video:.*(\\d{2,})x(\\d{2,}) ");
+    // Example of output to parse v0.6 and above
+    // Stream #0.1(und): Video: h264, yuv420p, 352x262 [PAR 1:1 DAR 176:131], 301 kb/s, 29.96 fps, 29.96 tbr, 29964 tbn, 59928 tbc
+    // Example of output from 0.7 and up releases
+    // Stream #0.1(und): Video: h264 (Constrained Baseline), yuv420p, 352x262, 301 kb/s, 29.96 fps, 29.96 tbr, 29964 tbn, 59928 tbc
+    rx.setPattern("Stream.*Video:.*(\\d{2,})x(\\d{2,}).*"); // TODO FIXME fixed but still return bad number
+    qDebug() << "sized extracted " + rx.cap(1) + "x" + rx.cap(2);
     rx.setMinimal(true);
     if (rx.indexIn(result, 0) == -1)
     {
         output->setCommandText("ffmpeg -i " + input_file.absoluteFilePath());
-        QMessageBox::critical(0,QObject::tr("error"),QObject::tr("ffmped could not get video information") );
+        QMessageBox::critical(0,QObject::tr("error"),QObject::tr("ffmped could not get video information, conversion will keep original resolution") );
         return "";
     }
-    width = rx.cap(1).toInt();
-    height = rx.cap(2).toInt();
+    // WxH original detected values
+    old_width = rx.cap(1).toInt();
+    old_height = (rx.cap(2) + "0").toInt(); // TODO work around for stupid thing rexpr 
+    qDebug() << "sized detected " + QString::number(old_width) + "x" + QString::number(old_height);
 
     qreal dx,dy;
     int new_width;
     int new_height;
 
-    dx = (qreal)GUI_width / width;
-    dy = (qreal)ui->SB_y_resolution->value() / height;
+    // scaling factor calculated, convert all value or separated?
+    dx = (qreal)ui->SB_x_resolution->value() / (qreal)old_width;
+    dy = (qreal)ui->SB_y_resolution->value() / (qreal)old_height;
+    qDebug() << "scaled factors " + QString::number(dx) + "x" + QString::number(dy);
+
     if (dx<=dy) {
-        new_width = width * dx;
-        new_height= height * dx;
+        new_width = old_width * dx;
+        new_height= old_height * dx;
     }
     else {
-        new_width = width * dy;
-        new_height= height * dy;
+        new_width = old_width * dx;
+        new_height= old_height * dy;
     }
+    qDebug() << "resize calculated " + QString::number(new_width) + "x" + QString::number(new_height);
+
     // round width and height to the lower multiple of 8
     new_width = new_width/8*8;
-    new_height= new_height/8*8;
+    new_height= new_height/8*8; // : ?? maybe 4
 
     int H_padding;
     int V_padding;
+
+    // coordinates , set position of new video in center of calculed size
     H_padding = ( (qreal)GUI_width-new_width ) / 2;
-    V_padding = ( (qreal)GUI_height-new_height ) / 2;
+    V_padding = ( (qreal)GUI_height-new_height ) / 2;    // some fixed need here
+
+    // TODO FIXME: due the calculate of scaling facor this assig wrong number to Y so then swaping values
     ret="-vf scale="+QString::number(new_width)+":"+QString::number(new_height)+","
         "pad="+QString::number(GUI_width)+":"+QString::number(GUI_height)+
         ":"+QString::number(H_padding)+":"+QString::number(V_padding)+":0x000000";
 
+    // original line: resulting in bad height asigned in high Y position and lower heigh
+    /*ret="-vf scale="+QString::number(new_width)+":"+QString::number(new_height)+","
+        "pad="+QString::number(GUI_width)+":"+QString::number(GUI_height)+
+        ":"+QString::number(H_padding)+":"+QString::number(V_padding)+":0x000000";
+*/
     return ret;
 }
 
@@ -1159,12 +1181,21 @@ void ffmpegFrontend::runFfmpeg(QStringList args, QFileInfo input_file, QFileInfo
     last_input_file = input_file;
     last_output_file = output_file;
 
-    // Add input file, displayed args, -y to force overwrite and output file
-    args_twins << "-i \"" + input_file.absoluteFilePath() + "\" "
+    // build command line args
+    args_twins << "-i "
+            // Add input file,
+            << " \"" + input_file.absoluteFilePath() + "\" "
+            // displayed args,
             << args
+            // size and video related
             << " " + getSizeAndPaddingParameters(input_file)
+            // thread numbers if defined by users or ffmpeg auto
             << thread_param
+            // if defined a experimental codec use it and dont care
+            << " -strict experimental"
+            // -y to force overwrite and output file
             << " -y"
+            // output file
             << " \"" + output_file.absoluteFilePath()+ "\"";
     QString all_args;
     for (int i=0; i<args_twins.size(); i++)
@@ -1193,7 +1224,7 @@ void ffmpegFrontend::ffmpegStderr()
 void ffmpegFrontend::ffmpegFinished( int exitCode )
 {
     if (exitCode!=0) {
-        output->appendErrorText( tr("ffmpeg error\n") +
+        output->appendErrorText( tr("ffmpeg error, please see output below and fix options choosed\n") +
                                  tr("The original video file still be in ") +
                                  last_input_file.absoluteFilePath() + "\n");
         output->showErrorWidget();
@@ -1231,7 +1262,7 @@ void ffmpegFrontend::ffmpegStarted()
 void ffmpegFrontend::ffmpegError(QProcess::ProcessError err)
 {
     Q_UNUSED(err)
-    output->appendErrorText( tr("ffmpeg error\n") +
+    output->appendErrorText( tr("ffmpeg error, please see output below and fix options choosed\n") +
                              tr("The original video file still be in ") +
                              last_input_file.absoluteFilePath() );
     output->showErrorWidget();

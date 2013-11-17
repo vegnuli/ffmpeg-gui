@@ -1,6 +1,7 @@
 /***************************************************************************
-*  ffmpegGUI. Frontend for ffmpeg                                          *
+*  FFMPEG-GUI main frontend header for wrapper gui rexpress usage ffmpeg   *
 *  Copyright (C) 2009-2012  Marco Bavagnoli - lil.deimos@gmail.com         *
+*  Copyright (C) 2013  PICCORO Lenz McKAY - mckaygerhard@gmail.com         *
 *                                                                          *
 *  This program is free software: you can redistribute it and/or modify    *
 *  it under the terms of the GNU General Public License as published by    *
@@ -119,9 +120,7 @@ private:
     void setupCB_presets();
     void remove_command(QString command);
     void check_command(QString command, QString arg);
-    void replace_command(QString command,
-                         QString command_replace_with,
-                         QString arg_replace_with);
+    void replace_command(QString command, QString command_replace_with, QString arg_replace_with);
 
 
 public slots:
@@ -145,13 +144,9 @@ private slots:
     void on_CB_as_original_clicked(bool checked);
     void update_ffmpeg_args();
     void update_ffmpeg_GUI_args();
-
     void on_PB_view_log_clicked();
-
     void on_PB_set_ffmpeg_dir_clicked();
-
     void on_LE_ffmpeg_dir_returnPressed();
-
     void on_pushButton_clicked();
 
 signals:
