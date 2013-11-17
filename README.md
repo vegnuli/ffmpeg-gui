@@ -1,7 +1,10 @@
-ffmpegGUI. Frontend for ffmpeg
+ffmpegGUI. Wrapper GUI Frontend for ffmpeg
+======================================
 
+Graphically wrapper of ffmpeg usage command line arguments for users.
 
 ABOUT
+-----
 
 ffmpegGUI is a frontend to ffmpeg that allow you to set most important
 conversion parameters. You can choose your preferred installed preset
@@ -13,21 +16,22 @@ Written using Qt framework.
 
 
 INSTALL & USAGE
+---------------
 
-In Linux/X11 or Mac OS/X, install the latest Qt development packages that
-you will find on http://qt.nokia.com/ on terminal, go inside the source 
-tree and run:
+In Linux/X11 or Mac OS/X, install the latest Qt development packages and
+get in source tree and run:
 
 qmake (or qmake-qt4, usually in Debian)
 make (or gmake, if use older GNU command)
 
-and thenrun from the current dir as: "./ffmpeg-gui".
+For usage wihtout install then run from the current dir as: "./ffmpeg-gui".
 
 For install u can made "make install" but this target are experimental, 
 there's no process to uninstall, files are under DESTDIR variable.
 
 
-PLANS & ISSUES:
+NOTES AND ISSUES:
+---------------
 
 translations and preset are not right handle by instalation, the 
 program only manage the ffmpeg frontend, the ffplay and ffprobe still not.
@@ -37,11 +41,19 @@ program only manage the ffmpeg frontend, the ffplay and ffprobe still not.
 * ffplay are a command line player directly using the ffmpeg libs.
 
 
+PLANS:
+------
+
+* macros for path's installations and setup of build system
+* translations must use locale system dirs (qt translation are very windose like)
+* version detection tool and combo box loading
+* resizing process fixeds depends on version detected
+
 
 LICENCE:
 
-Copyright (C) 2010-2012  Marco Bavagnoli - lil.deimos@gmail.com
-Copyright (C) 2013  PICCORO Lenz McKAY - mckaygerhard@gmail.com
+Copyright (C) 2010-2012  Marco Bavagnoli - <lil.deimos@gmail.com>
+Copyright (C) 2013  PICCORO Lenz McKAY - <mckaygerhard@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -58,9 +70,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 CONTACT:
+--------
 
-Hope you enjoy this app and if you have any comment, suggestions or bug report,
+1) Hope you enjoy this app and if you have any comment, suggestions or bug report,
 leave me an email <lil.deimos@gmail.com>, I will be happy for your support.
+
+2) (me) For anothers only send mails in text only, to PICCORO's, if 
+u dessire to contribute, the only rule its to support olders releases, 
+ah!, winbuntu users dont mail me ok!
 
 
 
