@@ -54,9 +54,7 @@ LICENCE:
 --------
 
 Copyright (C) 2010-2012  Marco Bavagnoli - <lil.deimos@gmail.com>
-
 Copyright (C) 2013  PICCORO Lenz McKAY - <mckaygerhard@gmail.com>
-
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
