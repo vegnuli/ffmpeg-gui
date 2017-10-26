@@ -51,6 +51,7 @@ PLANS:
 
 
 LICENCE:
+--------
 
 Copyright (C) 2010-2012  Marco Bavagnoli - <lil.deimos@gmail.com>
 Copyright (C) 2013  PICCORO Lenz McKAY - <mckaygerhard@gmail.com>
